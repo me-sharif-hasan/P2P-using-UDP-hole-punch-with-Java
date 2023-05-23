@@ -33,14 +33,19 @@ public class HolePunchSocket {
     }
 
     public void beginHolePunch(){
-        String []ip_port = new String[0];
-        try {
-            ip_port = PrimaryServerSingleton.getInstance().getIp(target).split(":");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        long time=Long.MIN_VALUE; 
+        String []ip_port = new String[2];
         while(true){
             try {
+                try {
+                    if(Math.abs(time-System.currentTimeMillis())>10*1000) {
+                        ip_port = PrimaryServerSingleton.getInstance().getIp(target).split(":");
+                        time=System.currentTimeMillis();
+                        System.out.println("IP Collected");
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 TimeUnit.MILLISECONDS.sleep(Settings.DEFAULT_HOLE_PUNCH_INTERVAL_MILS);
                 String udpData="II_"+Settings.USERNAME+"\n";
                 DatagramSocket datagramSocket = HolePunchSocketUtilSingleton.getDatagram();
