@@ -29,12 +29,13 @@ class PublicIpSync extends Thread {
         initiateHolePunchReceiver();
     }
 
+
     @Override
     public void run() {
         while (true) {
             try {
                 System.out.println("Initiating public ip:port sync");
-                String ip_port=getIpAddress();
+                getIpAddress();
                 //System.out.println(ip_port);
                 //PrimaryServerSingleton.getInstance().updateIp(ip_port, Settings.USERNAME);
                 TimeUnit.MILLISECONDS.sleep(Settings.DEFAULT_STUN_INTERVAL_MILS);
@@ -50,9 +51,11 @@ class PublicIpSync extends Thread {
     }
 
 
-
+int stunSelect=0;
     private String getIpAddress() throws IOException {
-        DatagramPacket p = new DatagramPacket(messageHeader, messageHeader.length, InetAddress.getByName(Settings.DEFAULT_STUN_SERVER), Settings.DEFAULT_STUN_PORT);
+        DatagramPacket p = new DatagramPacket(messageHeader, messageHeader.length, InetAddress.getByName(Settings.DEFAULT_STUN_SERVER[stunSelect]), Settings.DEFAULT_STUN_PORT);
+        System.out.println("Stun server is: "+Settings.DEFAULT_STUN_SERVER[stunSelect]);
+        stunSelect=(stunSelect+1)%1;
         datagramSocket.send(p);
         System.out.println("Datagram stun packet sent");
         // retrieving response

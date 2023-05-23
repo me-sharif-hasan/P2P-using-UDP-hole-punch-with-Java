@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class PrimaryServerSingleton {
-    private final String baseUrl="http://localhost:8080/";
+    private final String baseUrl="https://testproject.iishanto.com/";
     private PrimaryServerSingleton(){
 
     }

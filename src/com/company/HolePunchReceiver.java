@@ -29,7 +29,8 @@ public class HolePunchReceiver extends Thread{
             datagramSocket = HolePunchSocketUtilSingleton.getDatagram();
             while(true){
                 try {
-                    DatagramPacket rp = new DatagramPacket(new byte[1024], 1024);
+                    byte []buff=new byte[1024];
+                    DatagramPacket rp = new DatagramPacket(buff, buff.length);
                     System.out.println("Waiting for data");
                     datagramSocket.receive(rp);
                     System.out.println("Data received");
@@ -49,7 +50,7 @@ public class HolePunchReceiver extends Thread{
                         receiveMH.parseAttributes(buffer);
                         MappedAddress ma = (MappedAddress) receiveMH.getMessageAttribute(MessageAttribute.MessageAttributeType.MappedAddress);
                         updatePublicIp(ma.getAddress() + ":" + ma.getPort());
-                        //updatePublicIp(/*ma.getAddress()*/"127.0.0.1" + ":" + datagramSocket.getLocalPort()/*ma.getPort()*/);
+                        System.out.println(ma.getAddress()+" "+ma.getPort());
                     } catch (MessageAttributeParsingException e) {
                         e.printStackTrace();
                     }

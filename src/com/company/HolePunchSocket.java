@@ -33,18 +33,24 @@ public class HolePunchSocket {
     }
 
     public void beginHolePunch(){
+        String []ip_port = new String[0];
+        try {
+            ip_port = PrimaryServerSingleton.getInstance().getIp(target).split(":");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         while(true){
             try {
+                TimeUnit.MILLISECONDS.sleep(Settings.DEFAULT_HOLE_PUNCH_INTERVAL_MILS);
                 String udpData="II_"+Settings.USERNAME+"\n";
                 DatagramSocket datagramSocket = HolePunchSocketUtilSingleton.getDatagram();
                 byte []buff=udpData.getBytes();
-                String []ip_port=PrimaryServerSingleton.getInstance().getIp(target).split(":");
                 String ip=ip_port[0];
                 int port=Integer.parseInt(ip_port[1]);
                 DatagramPacket datagramPacket=new DatagramPacket(buff,buff.length, InetAddress.getByName(ip),port);
+                System.out.println(datagramPacket.getAddress()+"..."+datagramPacket.getPort());
                 datagramSocket.send(datagramPacket);
-                System.out.println("DATA SENT "+new String(buff));
-                TimeUnit.MILLISECONDS.sleep(Settings.DEFAULT_HOLE_PUNCH_INTERVAL_MILS);
+                System.out.println("DATA SENT "+new String(buff)+" to "+ip+":"+port);
             }catch (Exception e){
                 System.err.println("Check if primary server is okay!");
                 System.err.println(e.getLocalizedMessage());

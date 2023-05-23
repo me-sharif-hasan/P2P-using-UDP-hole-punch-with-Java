@@ -14,7 +14,7 @@ public class HolePunchSocketUtilSingleton {
     DatagramSocket datagramSocket;
     private HolePunchSocketUtilSingleton() throws SocketException, UtilityException, InterruptedException {
         datagramSocket = new DatagramSocket();
-        datagramSocket.setReuseAddress(true);
+        //datagramSocket.setReuseAddress(true);
         System.out.println("Datagram socket created");
         beginIpSync();
        // TimeUnit.MILLISECONDS.sleep(1000);
