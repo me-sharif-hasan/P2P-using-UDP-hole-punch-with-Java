@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class HolePunchSocketUtilSingleton {
     DatagramSocket datagramSocket;
     private HolePunchSocketUtilSingleton() throws SocketException, UtilityException, InterruptedException {
-        datagramSocket = new DatagramSocket();
+        datagramSocket = new DatagramSocket(8989);
         //datagramSocket.setReuseAddress(true);
         System.out.println("Datagram socket created");
         beginIpSync();

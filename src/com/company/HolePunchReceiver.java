@@ -27,10 +27,11 @@ public class HolePunchReceiver extends Thread{
         DatagramSocket datagramSocket= null;
         try {
             datagramSocket = HolePunchSocketUtilSingleton.getDatagram();
+            byte []buff=new byte[512];
+            DatagramPacket rp = new DatagramPacket(buff, buff.length);
             while(true){
                 try {
-                    byte []buff=new byte[1024];
-                    DatagramPacket rp = new DatagramPacket(buff, buff.length);
+                    rp.setData(new byte[512]);
                     System.out.println("Waiting for data");
                     datagramSocket.receive(rp);
                     System.out.println("Data received");
@@ -67,8 +68,8 @@ public class HolePunchReceiver extends Thread{
         }
     }
 
-    public void updatePublicIp(String ip_port) throws IOException {
-        System.out.println("UPDATING IP_PORT:"+ip_port);
+    public void updatePublicIp(String ip_port) throws IOException, UtilityException, InterruptedException {
+        System.out.println("UPDATING IP_PORT:"+ip_port+" "+HolePunchSocketUtilSingleton.getDatagram().getLocalPort());
         PrimaryServerSingleton.getInstance().updateIp(ip_port,Settings.USERNAME);
     }
 

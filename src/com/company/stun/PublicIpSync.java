@@ -36,8 +36,6 @@ class PublicIpSync extends Thread {
             try {
                 System.out.println("Initiating public ip:port sync");
                 getIpAddress();
-                //System.out.println(ip_port);
-                //PrimaryServerSingleton.getInstance().updateIp(ip_port, Settings.USERNAME);
                 TimeUnit.MILLISECONDS.sleep(Settings.DEFAULT_STUN_INTERVAL_MILS);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -58,24 +56,6 @@ int stunSelect=0;
         stunSelect=(stunSelect+1)%1;
         datagramSocket.send(p);
         System.out.println("Datagram stun packet sent");
-        // retrieving response
-//        DatagramPacket rp;
-//
-//        rp = new DatagramPacket(new byte[32], 32);
-//        datagramSocket.receive(rp);
-//        try {
-//            byte []buffer=rp.getData();
-//            String data=new String(buffer).substring(0,2);
-//            System.out.println(data);
-//
-//            receiveMH.parseAttributes(buffer);
-//            MappedAddress ma = (MappedAddress) receiveMH
-//                    .getMessageAttribute(MessageAttribute.MessageAttributeType.MappedAddress);
-//            System.out.println(ma.getAddress()+"OKAY");
-//            return ma.getAddress()+":"+ma.getPort();
-//        } catch (MessageAttributeParsingException e) {
-//            e.printStackTrace();
-//        }
         return null;
     }
 }

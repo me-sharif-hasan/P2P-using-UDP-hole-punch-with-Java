@@ -56,6 +56,7 @@ public class HolePunchSocket {
                 System.out.println(datagramPacket.getAddress()+"..."+datagramPacket.getPort());
                 datagramSocket.send(datagramPacket);
                 System.out.println("DATA SENT "+new String(buff)+" to "+ip+":"+port);
+                TimeUnit.MILLISECONDS.sleep(3000);
             }catch (Exception e){
                 System.err.println("Check if primary server is okay!");
                 System.err.println(e.getLocalizedMessage());
